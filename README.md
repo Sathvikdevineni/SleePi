@@ -1,2 +1,2 @@
-# Sleep-Pi
+# SleePi
 Real Time Embedded Project
