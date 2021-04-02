@@ -16,7 +16,7 @@ endif()
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-add_subdirectory(libraries/dlib-19.21 dlib_build)
+add_subdirectory(libraries/dlib-19.22 dlib_build)
 
 
 

@@ -1,5 +1,11 @@
 
 #include <iostream>
+#include <dlib/opencv.h>
+#include <dlib/image_processing/frontal_face_detector.h>
+#include <dlib/image_processing/render_face_detections.h>
+#include <dlib/image_processing.h>
+#include <dlib/gui_widgets.h>
+#include <dlib/image_io.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
@@ -7,11 +13,14 @@
 
 using namespace cv;
 using namespace std;
+using namespace dlib;
 
 double const REDUCE_SIZE_BY = 2;
 CascadeClassifier face_cascade;
+shape_predictor sp;
 
-void detect(Mat input_frame);
+void detect(Mat input_frame, image_window disp);
+static dlib::rectangle openCVRectToDlib(cv::Rect r);
 
 int main( int argc, char** argv )
 {
@@ -21,7 +30,9 @@ int main( int argc, char** argv )
     //can also be used for video input: VideoCapture cap("PATH_TO_VIDEO")
     // String face_cascade_name = samples::findFile("../static/haarcascade_frontalface_alt.xml");
     String face_cascade_name = "../static/haarcascade_frontalface_alt.xml";
-
+    String shape_predictor_path = "../static/shape_predictor_68_face_landmarks.dat";
+    
+    deserialize(shape_predictor_path) >> sp;
     
      if( !face_cascade.load( face_cascade_name ) )
     {
@@ -52,8 +63,9 @@ int main( int argc, char** argv )
     double dHeight = cap.get(CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
 
     cout << "Resolution of the video : " << dWidth << " x " << dHeight << endl;
-
-    while(true)
+    image_window win;
+    Mat processed;
+    while(!win.is_closed())
     {
         // wait for a new frame from camera and store it into 'frame'
         cap.read(frame);
@@ -62,19 +74,55 @@ int main( int argc, char** argv )
             cerr << "ERROR! blank frame grabbed\n";
             break;
         }
-        detect(frame);
+    
+        double scale_factor = 1/REDUCE_SIZE_BY;
+        resize( frame, processed, Size(), scale_factor, scale_factor, INTER_LINEAR ); 
+        // cvtColor( processed, processed, COLOR_BGR2GRAY );    
+        // equalizeHist( processed, processed );
 
-       
-        // show live and wait for a key with timeout long enough to show images
+        std::vector<Rect> faces;
+        std::vector<full_object_detection> shapes;
+        cv_image<bgr_pixel> cimg(processed);
+        // detect face
+        face_cascade.detectMultiScale( processed, faces );
+
+        for ( size_t i = 0; i < faces.size(); i++ )
+        {
+            // center of the face
+            Point center( faces[i].x*REDUCE_SIZE_BY + faces[i].width*REDUCE_SIZE_BY/2, faces[i].y*REDUCE_SIZE_BY + faces[i].height*REDUCE_SIZE_BY/2 );
+            // top right and bottom right rescaled coordinates for drawing a rectangle
+            Point tr_scaled_back(faces[i].x*REDUCE_SIZE_BY, faces[i].y*REDUCE_SIZE_BY);
+            Point bl_scaled_back(faces[i].x*REDUCE_SIZE_BY + faces[i].width*REDUCE_SIZE_BY, faces[i].y*REDUCE_SIZE_BY + faces[i].height*REDUCE_SIZE_BY);
+            
+            // rectangle(processed, faces[i], Scalar( 255, 0, 255 ));
+
+            // cv::rectangle(input_frame, tr_scaled_back, bl_scaled_back, Scalar( 255, 0, 255 ),3);
+            // draw an elipse around the face
+            // ellipse( input_frame, center, Size( faces[i].width*REDUCE_SIZE_BY/2, faces[i].height*REDUCE_SIZE_BY/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4 );
+           
+
+            dlib::rectangle face_dlib = openCVRectToDlib(faces[i]);
+            shapes.push_back(sp(cimg,face_dlib));
+
         
-        
-        if (waitKey(5) >= 0)
-            break;
+            // show live and wait for a key with timeout long enough to show images
+            
+            
+            // if (waitKey(5) >= 0)
+            //     break;
+        }
+            win.clear_overlay();
+            win.set_image(cimg);
+            win.add_overlay(render_face_detections(shapes));
+
+
     }
+
+
     return 0;
 }
 
-void detect(Mat input_frame){
+void detect(Mat input_frame, image_window disp){
     Mat processed;
     double scale_factor = 1/REDUCE_SIZE_BY;
     resize( input_frame, processed, Size(), scale_factor, scale_factor, INTER_LINEAR ); 
@@ -95,13 +143,19 @@ void detect(Mat input_frame){
         
         // rectangle(processed, faces[i], Scalar( 255, 0, 255 ));
 
-        rectangle(input_frame, tr_scaled_back, bl_scaled_back, Scalar( 255, 0, 255 ),3);
+        // cv::rectangle(input_frame, tr_scaled_back, bl_scaled_back, Scalar( 255, 0, 255 ),3);
         // draw an elipse around the face
         // ellipse( input_frame, center, Size( faces[i].width*REDUCE_SIZE_BY/2, faces[i].height*REDUCE_SIZE_BY/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4 );
+        std::vector<full_object_detection> shapes;
      }
 
 
 
     imshow("Original Capture", input_frame);
     // imshow("Processed Capture", processed);
+}
+
+static dlib::rectangle openCVRectToDlib(cv::Rect r)
+{
+  return dlib::rectangle((long)r.tl().x, (long)r.tl().y, (long)r.br().x - 1, (long)r.br().y - 1);
 }
