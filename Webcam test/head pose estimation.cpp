@@ -16,7 +16,8 @@ int main(int argc, char **argv)
     image_points.push_back( cv::Point2d(513, 301) );    // Right eye right corner
     image_points.push_back( cv::Point2d(345, 465) );    // Left Mouth corner
     image_points.push_back( cv::Point2d(453, 469) );    // Right mouth corner
-    
+    std::vector<cv::Point3d> model_points;
+    model_points.push_back(cv::Point3d(0.0f, 0.0f, 0.0f)); // added the 3d point for nose tip
 
 }
 
