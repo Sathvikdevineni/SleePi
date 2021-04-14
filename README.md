@@ -1,7 +1,7 @@
 # SleePi
 Real Time Embedded Project
 ## ABOUT
-SleePi is a real-time alert system ,its function is to screen the driver's drowsiness detection. SleePi is a low-cost prototype which will observe the driver’s eyes, then alert them if they feel sleepy and closing his eyes for long. As it is a real-time project which enhances safety-critical applications. Hence different methodologies are used on deduction times and exhibit the viability of ongoing observing dependent on out-of-test information to caution a sleepy driver. So we can say that SleePi step towards the pragmatic profound learning applications, possibly forestalling miniature dozes and reduces the accidents.
+SleePi is a real-time alert system and its function is to reocord the driver's drowsiness detection by using a camera mounted on raspberry pi. SleePi is a low-cost prototype which will observe the driver’s eyes, then alert them if they feel sleepy and also closing the eyes for long. As it is a real-time project which enhances safety-critical applications. Hence different methodologies are used on deduction times and exhibit the viability of ongoing observing dependent on out-of-test information to alert a sleepy driver. So we can say that SleePi step towards the pragmatic profound learning applications, possibly forestalling miniature dozes and reduces the accidents.
 
 ## HARDWARE
 - Raspberry Pi
