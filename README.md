@@ -1,18 +1,32 @@
 # SleePi
 Real Time Embedded Project
-## ABOUT
+
+## Table of contents
+<ol>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+      <ul>
+      <li><a href="#Hardware">Hardware</a</li>
+      <li><a href="#Software">Software</a</li>
+      </ul>
+    <li><a href="#Methodology">Methodology</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+</ol>
+         
+## About the project         
 SleePi is a real-time alert system and its function is to record the driver's drowsiness by using a camera mounted on raspberry pi. SleePi is a low-cost prototype which will observe the driver’s eyes, then alert them if they feel sleepy and also closing the eyes for long. As it is a real-time project which enhances safety-critical applications. Hence different methodologies are used on deduction times and exhibit the viability of ongoing observing dependent on out-of-test information to alert a sleepy driver. So we can say that SleePi step towards the pragmatic profound learning applications, possibly forestalling miniature dozes and reduces the accidents.
 
-## HARDWARE
+## Hardware
 - Raspberry Pi
 - 5MP Camera Module OV5647
 
-## SOFTWARE
+## Software
 - linux
 
 
 
-## METHODOLOGY
+## Methodology
 The first step is to record a video from the camera which is connected to the Raspberry Pi. We resized the obtained video from its current size to 640x480, and converted to grayscale, which made it appropriate for ongoing handling. From there on, the facial parts like eyebrows, nose, mouth, eyes and facial structure were captured.The eyes were then confined to ascertain the PERCLOS, which depends on the Eye Aspect Ratio (EAR). The EAR was calculated during the calibration time frame, which was measured to know the drowsiness limit. During the EAR for both the driver's eyes will be determined, for each edge, to decide the driver's condition. Additionally, the head present is obtained to decide whether the driver is mindful or oblivious. The languor discovery and the careless identification works in equal and an alert will be set off when either:
 1. The EAR surpasses the sluggishness edge, or
 2. The driver head present isn't looking forward.
