@@ -8,7 +8,7 @@ SleePi is a real-time alert system and its function is to record the driver's dr
 - 5MP Camera Module OV5647
 
 ## SOFTWARE
-
+- linux
 
 
 
