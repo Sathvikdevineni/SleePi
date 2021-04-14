@@ -12,8 +12,8 @@ int main(int argc, char **argv)
     std::vector<cv::Point2d> Image_Points;
    Image_Points.push_back( cv::Point2d(359, 391) );    // Nose tip
    Image_Points.push_back( cv::Point2d(399, 561) );    // Chin
-   Image_Points.push_back( cv::Point2d(337, 297) );     // Left eye left corner
-   Image_Points.push_back( cv::Point2d(513, 301) );    // Right eye right corner
+   Image_Points.push_back( cv::Point2d(387, 458) );     // Left eye left corner
+   Image_Points.push_back( cv::Point2d(453, 789) );    // Right eye right corner
    Image_Points.push_back( cv::Point2d(345, 465) );    // Left Mouth corner
    Image_Points.push_back( cv::Point2d(453, 469) );    // Right mouth corner
     
@@ -24,7 +24,9 @@ int main(int argc, char **argv)
     Model_Points.push_back(cv::Point3d(-225.0f, 170.0f, -135.0f));       // Left eye left corner
     Model_Points.push_back(cv::Point3d(225.0f, 170.0f, -135.0f));        // Right eye right corner
     Model_Points.push_back(cv::Point3d(-150.0f, -150.0f, -125.0f));      // Left Mouth corner
-    Model_Points.push_back(cv::Point3d(150.0f, -150.0f, -125.0f));  
+    Model_Points.push_back(cv::Point3d(150.0f, -150.0f, -125.0f));       // Right mouth corner
+    
+    
 
 }
 
