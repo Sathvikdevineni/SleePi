@@ -28,5 +28,18 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # add the executable
 add_executable(Main main.cpp)
 
-target_link_libraries( Main ${OpenCV_LIBS} )
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+
+
+
+target_link_libraries(Main Threads::Threads)
+target_link_libraries(Main ${OpenCV_LIBS} )
 target_link_libraries(Main dlib::dlib)
+target_link_libraries(Main
+    ${CMAKE_DL_LIBS}
+)
+
+
+set_property(TARGET Main PROPERTY CXX_STANDARD 20)
