@@ -17,8 +17,10 @@ ma_device device;
 ma_device_config config;
 ma_uint32 g_decoderCount;
 ma_decoder *g_pDecoders;
-ma_event g_stopEvent;
+ma_event *g_stopEvent;
 
+// Keeps track of which sample has finished playing
+int sampleCounter = 0;
 // True if currently playing sample has and end (does not loop)
 bool isPlayingNonloopSample = false;
 // Indicates whether a sample should be looped
@@ -33,10 +35,13 @@ int init_alarm()
     // If this is true, it means that the vocal indication of the system's status has not yet finished playing and we should wait.
     if (isPlayingNonloopSample)
     {
-        std::cout << "waiting in alarm\n";
-        ma_event_wait(&g_stopEvent);
+        std::cout << "waiting in alarm init\n";
+        ma_event_wait(&g_stopEvent[1]);
     }
     std::cout << "finished waiting in alarm\n";
+    // Uninitialise the previous audio sample
+    ma_decoder_uninit(&g_pDecoders[1]);
+    ma_device_uninit(&device);
 
     loopSample = true;
     // Set data
@@ -54,10 +59,8 @@ int init_alarm()
 
 int start_alarm()
 {
-    alarmON = true;
-
     printf("Start alarm called \n");
-
+    alarmON = true;
     // Start playing
     if (ma_device_start(&device) != MA_SUCCESS)
     {
@@ -71,14 +74,12 @@ int start_alarm()
 
 int play_calibration_start()
 {
-    isPlayingNonloopSample = true;
-
     printf("caliration start called\n");
+    isPlayingNonloopSample = true;
     // This sample is played first, therefore we do not need to check status
     // Set data
     config.pUserData = &g_pDecoders[0];
     // Init device
-    ma_event_init(&g_stopEvent);
     if (ma_device_init(NULL, &config, &device) != MA_SUCCESS)
     {
         printf("Failed to open playback device.\n");
@@ -93,7 +94,6 @@ int play_calibration_start()
         ma_decoder_uninit(&decoder);
         return -4;
     }
-
     return 0;
 }
 
@@ -103,16 +103,18 @@ int play_calibartion_completed()
     printf("calib complete called \n");
     if (isPlayingNonloopSample)
     {
-        printf("waiting in calibration \n");
-        ma_event_wait(&g_stopEvent);
+        printf("waiting in calibration_finish \n");
+        ma_event_wait(&g_stopEvent[0]);
     }
     std::cout << "finished waiting in calib\n";
+    // Uninitialise the previous audio sample
+    ma_decoder_uninit(&g_pDecoders[0]);
+    ma_device_uninit(&device);
 
     // Set data
     config.pUserData = &g_pDecoders[1];
 
     // Init device
-    // ma_event_init(&g_stopEvent);
     if (ma_device_init(NULL, &config, &device) != MA_SUCCESS)
     {
         printf("Failed to open playback device.\n");
@@ -136,7 +138,6 @@ int play_calibartion_completed()
 int stop_playing()
 {
     printf("Stopping playback \n");
-
     // We only want this function to execute if currently playing sound is the alarm.
     if (isPlayingNonloopSample)
     {
@@ -171,8 +172,10 @@ void data_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uin
         // If not, then send a signal that the sample has finished playing
         else
         {
-            ma_event_signal(&g_stopEvent);
+            // Increment the counter to keep track which sample finished playing
+            ma_event_signal(&g_stopEvent[sampleCounter++]);
             isPlayingNonloopSample = false;
+
             printf("sent signal end\n");
         }
     }
@@ -187,12 +190,12 @@ int init_playback()
     // Equal to number of different files that will be played
     g_decoderCount = 3;
     g_pDecoders = (ma_decoder *)malloc(sizeof(*g_pDecoders) * g_decoderCount);
+    g_stopEvent = (ma_event *)malloc(sizeof(*g_stopEvent) * g_decoderCount);
 
     // set up the same config for all decoders
     ma_decoder_config decoderConfig = ma_decoder_config_init(SAMPLE_FORMAT, CHANNEL_COUNT, SAMPLE_RATE);
 
     // Load alarm sound
-
     result = ma_decoder_init_file_wav(CALIBRATION_START_LOC, &decoderConfig, &g_pDecoders[0]);
     if (result != MA_SUCCESS)
     {
@@ -206,20 +209,25 @@ int init_playback()
         std::cerr << "Failed to load file from " << CALIBRATION_END_LOC << "\n";
         return -2;
     }
-    // Load calibration completed sound
 
+    // Load calibration completed sound
     result = ma_decoder_init_file_wav(ALARM_LOC, &decoderConfig, &g_pDecoders[2]);
     if (result != MA_SUCCESS)
     {
         std::cerr << "Failed to load file from " << ALARM_LOC << "\n";
         return -2;
     }
+
     // Configure the device using speified parameters
     config = ma_device_config_init(ma_device_type_playback);
     config.playback.format = SAMPLE_FORMAT;   // Set to ma_format_unknown to use the device's native format.
     config.playback.channels = CHANNEL_COUNT; // Set to 0 to use the device's native channel count.
     config.sampleRate = SAMPLE_RATE;          // Set to 0 to use the device's native sample rate.
     config.dataCallback = data_callback;      // This function will be called when miniaudio needs more data.
+
+    // Initilise events that signal that the audio sample has finished. This is not done for the alarm sample because the alarm is looped
+    ma_event_init(&g_stopEvent[0]);
+    ma_event_init(&g_stopEvent[1]);
 
     return 0;
 }
