@@ -34,7 +34,10 @@ The first step is to record a video from the camera which is connected to the Ra
    </br>
    <a href="https://drive.google.com/file/d/1GYySi0OvmA4BjbVHNCkL5UcyptOgmjX4/view?usp=sharing"><img  src="Downloads/fb_logo.png"  width="44" height="44">
 
-## Author
+## License
+Distributed under the GPL-3.0 License.
+
+## Contact
 >Team 27 in ENG5220: Real Time Embedded Programming
 
 👤 **Sai Sathvik Devineni (2532243d)**
