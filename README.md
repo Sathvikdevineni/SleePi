@@ -1,5 +1,7 @@
-# SleePi
-Real Time Embedded Project
+<!-- PROJECT LOGO -->
+<br />
+![onlinelogomaker-041521-1144-5412-2000-transparent](https://user-images.githubusercontent.com/73529936/114861124-c0f02500-9de4-11eb-9d97-430249326211.png)
+
 
 ## Table of contents
 <ol>
