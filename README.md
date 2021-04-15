@@ -3,7 +3,8 @@
 <div align="center">
     <img src="https://user-images.githubusercontent.com/73529936/114861442-2f34e780-9de5-11eb-8a82-76c7db7b4bd9.png" alt="Paris" height="320">
   </a>
-
+</div>
+<br />
 
 ## Table of contents
 <ol>
