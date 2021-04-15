@@ -49,8 +49,9 @@ Distributed under the GPL-3.0 License.
 <li>Instagram - https://www.instagram.com/sleep.pi_uofg/</li>
 <li>Twitter - https://twitter.com/PiSleep </li>
 </ul>
+
 ## Contact
->Team 27 in ENG5220: Real Time Embedded Programming
+Team 27 in ENG5220: Real Time Embedded Programming
 
 👤 **Sai Sathvik Devineni (2532243d)**
 
