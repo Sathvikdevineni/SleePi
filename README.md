@@ -42,6 +42,8 @@ The first step is to record a video from the camera which is connected to the Ra
 ## License
 Distributed under the GPL-3.0 License.
 
+## Social Media 
+Facebook : https://www.facebook.com/RTPSleepPI
 ## Contact
 >Team 27 in ENG5220: Real Time Embedded Programming
 
