@@ -22,11 +22,6 @@ int main(int argc, char **argv)
     Model_Points.push_back(cv::Point3d(0.0f, 0.0f, 0.0f));               // Nose tip
     Model_Points.push_back(cv::Point3d(0.0f, -330.0f, -65.0f));          // Chin
     Model_Points.push_back(cv::Point3d(-225.0f, 170.0f, -135.0f));       // Left eye left corner
-    Model_Points.push_back(cv::Point3d(225.0f, 170.0f, -135.0f));        // Right eye right corner
-    Model_Points.push_back(cv::Point3d(-150.0f, -150.0f, -125.0f));      // Left Mouth corner
-    Model_Points.push_back(cv::Point3d(150.0f, -150.0f, -125.0f));       // Right mouth corner
-    
-    
-
+      
 }
 
