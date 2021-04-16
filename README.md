@@ -32,9 +32,10 @@ SleePi is a real-time alert system and its function is to record the driver's dr
 
 
 ## Methodology
-The first step is to record a video from the camera which is connected to the Raspberry Pi. We resized the obtained video from its current size to 640x480, and converted to grayscale, which made it appropriate for ongoing handling. From there on, the facial parts like eyebrows, nose, mouth, eyes and facial structure were captured.The eyes were then confined to ascertain the PERCLOS, which depends on the Eye Aspect Ratio (EAR). The EAR was calculated during the calibration time frame, which was measured to know the drowsiness limit. During the EAR for both the driver's eyes will be determined, for each edge, to decide the driver's condition. Additionally, the head present is obtained to decide whether the driver is mindful or oblivious. The languor discovery and the careless identification works in equal and an alert will be set off when either:
-1. The EAR surpasses the sluggishness edge, or
-2. The driver head present isn't looking forward.
+The first and most important step is to obtain a video from the Raspberry Pi's camera. We resized the obtained video to 640x480 pixels and converted it to grayscale, making it suitable for ongoing operation. From there on, the facial parts like eyebrows, nose, mouth, eyes and facial structure were captured.The eyes were then confined to ascertain the PERCLOS, which depends on the Eye Aspect Ratio (EAR). The EAR was calculated during the calibration process, which was used to decide the drowsiness limit. In order to evaluate the driver's condition, the EAR for each of the driver's eyes, for each tip, will be determined.. Furthermore, the presence of the driver's head is used to decide if the driver is conscious or not. An alarm is activated when the careless identification and the languor exploration work together when either:
+
+   1.	The EAR surpasses the sluggishness edge.
+   2.	The driver isn't looking forward.
 <p align="center">
    </br>
    <img src="https://user-images.githubusercontent.com/73529936/115017058-d8471500-9ead-11eb-8e0a-109c558ce478.PNG" alt="Paris" height="320">
