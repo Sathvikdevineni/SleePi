@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <iostream>
 
+// #include "config.hpp"
+
 #define ALARM_LOC "../static/alarm.wav"
 #define CALIBRATION_START_LOC "../static/calibration_start.wav"
 #define CALIBRATION_END_LOC "../static/calibration_complete.wav"
@@ -35,10 +37,12 @@ int init_alarm()
     // If this is true, it means that the vocal indication of the system's status has not yet finished playing and we should wait.
     if (isPlayingNonloopSample)
     {
-        std::cout << "waiting in alarm init\n";
+        printf("waiting in alarm_init\n");
         ma_event_wait(&g_stopEvent[1]);
     }
-    std::cout << "finished waiting in alarm\n";
+    printf("done waiting in alarm_init\n");
+    sampleCounter++;
+
     // Uninitialise the previous audio sample
     ma_decoder_uninit(&g_pDecoders[1]);
     ma_device_uninit(&device);
@@ -100,20 +104,19 @@ int play_calibration_start()
 int play_calibartion_completed()
 {
     // If this is true then the previous audio sample has not finished, therefore it must wait
-    printf("calib complete called \n");
     if (isPlayingNonloopSample)
     {
-        printf("waiting in calibration_finish \n");
+        printf("waiting in play_calibartion_completed\n");
         ma_event_wait(&g_stopEvent[0]);
     }
-    std::cout << "finished waiting in calib\n";
+    printf("done waiting in play_calibartion_completed \n");
+    sampleCounter++;
     // Uninitialise the previous audio sample
     ma_decoder_uninit(&g_pDecoders[0]);
     ma_device_uninit(&device);
 
     // Set data
     config.pUserData = &g_pDecoders[1];
-
     // Init device
     if (ma_device_init(NULL, &config, &device) != MA_SUCCESS)
     {
@@ -121,6 +124,7 @@ int play_calibartion_completed()
         ma_decoder_uninit(&decoder);
         return -3;
     }
+
     // Start playing
     if (ma_device_start(&device) != MA_SUCCESS)
     {
@@ -129,9 +133,6 @@ int play_calibartion_completed()
         ma_decoder_uninit(&decoder);
         return -4;
     }
-
-    isPlayingNonloopSample = true;
-
     return 0;
 }
 
@@ -173,10 +174,12 @@ void data_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uin
         else
         {
             // Increment the counter to keep track which sample finished playing
-            ma_event_signal(&g_stopEvent[sampleCounter++]);
-            isPlayingNonloopSample = false;
-
-            printf("sent signal end\n");
+            ma_event_signal(&g_stopEvent[sampleCounter]);
+            // Only set to false after all vocal instructions have finished.
+            if (sampleCounter >= 1)
+            {
+                isPlayingNonloopSample = false;
+            }
         }
     }
 
