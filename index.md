@@ -1,4 +1,14 @@
-## Welcome to GitHub Pages
+## Welcome to SleePi
+
+<br />
+<div align="center">
+    <img src="https://user-images.githubusercontent.com/73529936/114861442-2f34e780-9de5-11eb-8a82-76c7db7b4bd9.png" alt="Paris" height="320">
+  </a>
+</div>
+<br />
+
+
+SleePi is a real-time alert system and its function is to record the driver's drowsiness by using a camera which will observe the driver’s eyes, then alert them if they feel sleepy and also closing the eyes for long.
 
 You can use the [editor on GitHub](https://github.com/Sathvikdevineni/Sleep-Pi/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
