@@ -1,18 +1,10 @@
 #define MINIAUDIO_IMPLEMENTATION
-#include "libraries/miniaudio.h"
+#include "miniaudio.h"
 
 #include <stdio.h>
 #include <iostream>
 
-// #include "config.hpp"
-
-#define ALARM_LOC "../static/alarm.wav"
-#define CALIBRATION_START_LOC "../static/calibration_start.wav"
-#define CALIBRATION_END_LOC "../static/calibration_complete.wav"
-
-#define SAMPLE_FORMAT ma_format_f32
-#define CHANNEL_COUNT 2
-#define SAMPLE_RATE 48000
+#include "config.h"
 
 ma_decoder decoder;
 ma_device device;
@@ -32,6 +24,7 @@ bool alarmReady = false;
 // Indicates whether the alarm is currently on
 bool alarmON = false;
 
+// Initialises the alarm sample
 int init_alarm()
 {
     // If this is true, it means that the vocal indication of the system's status has not yet finished playing and we should wait.
@@ -60,7 +53,7 @@ int init_alarm()
     alarmReady = true;
     return 0;
 }
-
+// Starts playing the alarm sammple
 int start_alarm()
 {
     printf("Start alarm called \n");
@@ -75,7 +68,7 @@ int start_alarm()
     }
     return 0;
 }
-
+// Plays the audio sample indicating the start of calibration
 int play_calibration_start()
 {
     printf("caliration start called\n");
@@ -100,7 +93,7 @@ int play_calibration_start()
     }
     return 0;
 }
-
+// Plays the audio sample indicating the end of calibration
 int play_calibartion_completed()
 {
     // If this is true then the previous audio sample has not finished, therefore it must wait
@@ -110,6 +103,7 @@ int play_calibartion_completed()
         ma_event_wait(&g_stopEvent[0]);
     }
     printf("done waiting in play_calibartion_completed \n");
+    // Increment the counter to keep track which sample finished playing
     sampleCounter++;
     // Uninitialise the previous audio sample
     ma_decoder_uninit(&g_pDecoders[0]);
@@ -124,7 +118,6 @@ int play_calibartion_completed()
         ma_decoder_uninit(&decoder);
         return -3;
     }
-
     // Start playing
     if (ma_device_start(&device) != MA_SUCCESS)
     {
@@ -135,7 +128,7 @@ int play_calibartion_completed()
     }
     return 0;
 }
-
+// Stops currently playing audio, should only be used to stop the looping alarm sample.
 int stop_playing()
 {
     printf("Stopping playback \n");
@@ -150,7 +143,7 @@ int stop_playing()
     // No need to uninit device since we will likely use it again.
     return 0;
 }
-
+// Data callback function for playing audio
 void data_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 framesToRead)
 {
     MA_ASSERT(pDevice->playback.format == SAMPLE_FORMAT);
@@ -173,7 +166,6 @@ void data_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uin
         // If not, then send a signal that the sample has finished playing
         else
         {
-            // Increment the counter to keep track which sample finished playing
             ma_event_signal(&g_stopEvent[sampleCounter]);
             // Only set to false after all vocal instructions have finished.
             if (sampleCounter >= 1)
@@ -185,7 +177,7 @@ void data_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uin
 
     (void)pInput;
 }
-
+// Loads the audio samples and initialises audio device
 int init_playback()
 {
     ma_result result;
