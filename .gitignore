@@ -1,5 +1,3 @@
-SleePi/build/*
-SleePi/bin/*
 **/build/
 **/bin/
 **/.vscode

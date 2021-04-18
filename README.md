@@ -149,7 +149,7 @@ SET("OpenCV_DIR" "C:/OpenCV/")
 
 
 # Running the code
-To run the code you can build it yourself by running this from the build directory:
+To run the code you can build it yourself by running this from the build directory (create an empty one inside the SleePi folder):
 ```bash
 cmake ..
 cmake --build .

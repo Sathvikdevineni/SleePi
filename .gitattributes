@@ -1,0 +1,2 @@
+SleePi/libraries/* linguist-vendored
+*.h linguist-language=C++
