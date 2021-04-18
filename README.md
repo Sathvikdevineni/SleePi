@@ -8,26 +8,34 @@
 
 # Table of contents
 <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#about-the-project">About the Project</a></li>
+    <li><a href="technologiy">Technology</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
-      <ul>
-      <li><a href="#Hardware">Hardware</a</li>
-      <li><a href="#Software">Software</a</li>
-      </ul>
+<li><a href="#running-the-code">Running the Code</a></li>
+<li><a href="#configuration">Configuration</a></li>
     <li><a href="#Methodology">Methodology</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
 </ol>
          
-# About the project         
+# About the Project         
 SleePi is a real-time alert system and its function is to record the driver's drowsiness by using a camera mounted on raspberry pi. SleePi is a low-cost prototype which will observe the driver’s eyes, then alert them if they feel sleepy and also closing the eyes for long. As it is a real-time project which enhances safety-critical applications. Hence different methodologies are used on deduction times and exhibit the viability of ongoing observing dependent on out-of-test information to alert a sleepy driver. So we can say that SleePi step towards the pragmatic profound learning applications, possibly forestalling miniature dozes and reduces the accidents.
 
-# Hardware
-- Raspberry Pi
-- 5MP Camera Module OV5647
+# Technology
+## Third Party Libraries 
+- [Dlib](https://github.com/davisking/dlib) image processing toolkit used for facial landmark detection (included)
+- [OpenCV](https://github.com/opencv/opencv) image processing library used for facial detection and video display
+- [miniaudio](https://github.com/mackron/miniaudio) single file library for audio playback (included)
+## Hardware
+Tested on:
+- Raspberry Pi (v1) with  Pi NoIR Camera Module v2
+- Laptop with integrated webcam
 
-# Software
-- linux
+## Software
+Tested on:
+- Ubuntu 20.04.2 LTS
+- Raspberry Pi OS 5.10
+- Windows 10
 
 # Getting Started
 
@@ -122,40 +130,50 @@ If this did not work or for more detailed information you can check out [this gu
  
 ## Windows
 
-You can also run the code on Windows using your webcam. It was tested using MinGW compiler and pre-compiled
-OpenCV libraries.
-You need to install [CMake](https://cmake.org/download/)
-Then install the [MinGW-64 compiler](https://sourceforge.net/projects/mingw-w64/) (use x86_64 architecture and posix threads)
-Add _"YOUR_INSTALL_DIRECTORY"\mingw64\bin_ to your system PATH.
-Download pre-compiled OpenCV libraries for MinGW from [here](https://github.com/huihut/OpenCV-MinGW-Build) (Latest x64 version is 4.1.1 at the time of writing)
-Extract the archive on your pc and add _"EXTRACTED_LOCATION"\x64\mingw\bin_ to system PATH.
+You can also run the code on Windows using your webcam. It was tested using MinGW compiler and pre-compiled OpenCV libraries.<br>
+1. Install [CMake](https://cmake.org/download/).
+2. Install the [MinGW-64 compiler](https://sourceforge.net/projects/mingw-w64/) (during install, select x86_64 architecture and posix threads)
 
-If CMake still can't find your OpenCV installation, then you can change this line in CMakeLists.txt
+3. Add _"YOUR_INSTALL_DIRECTORY"\mingw64\bin_ to your system PATH.
+Download pre-compiled OpenCV libraries for MinGW from [here](https://github.com/huihut/OpenCV-MinGW-Build) (Latest x64 version is 4.1.1 at the time of writing)
+
+4. Extract the archive on your pc and add _"EXTRACTED_LOCATION"\x64\mingw\bin_ to system PATH.
+
+If CMake still can't find your OpenCV installation, then you can change this line in CMakeLists.txt to reflect your OpenCV location.
 ```cpp
 SET("OpenCV_DIR" "C:/OpenCV/")
 ```
-to reflect your OpenCV location.
 
-## Running the code
-To run the code you can either build it yourself by running this from the build directory:
+
+# Running the code
+To run the code you can build it yourself by running this from the build directory:
 ```bash
 cmake ..
 cmake --build .
 ```
-The exacutable will then appear in the bin folder from where you can run it. (Note that you need
+The executable will then appear in the bin folder from where you can run it. (Note that you need
 to run it from the bin directory, because the sound and prediction files are loaded using relative imports.
 
-Or you can use the provided scripts *Build_and_run_Windows.bat* or *build_and_run_linux.sh* to do this automatically.
+Or you can just use the provided scripts *Build_and_run_Windows.bat* or *build_and_run_linux.sh* to do this automatically.
 
+## Launch program automatically  at startup
+1. Edit the crontab list:
+```bash
+sudo crontab -e
+```
+2. Select option 1 (nano)
 
+3. At the end of the file add this line:
+```bash
+@reboot /path/to/sleepi/run_sleepi_linux.sh
+```
+# Configuration
 
-## Configuration
-
-Before running the code, you can configure a lot of the parameters to adjust the code's behaviour to your needs.
+Before running the code, you can configure a lot of the parameters to adjust the code's behavior to your needs.
 These parameters are stored in the config.h, which is in the include folder.
-The description of what each parameter does is put in the file itselffolder.
+The description of what each parameter does is put in the file itself.
 
-For example if you want to save a video output at full size and show only Face detection and EAR, you could define:
+For example, if you want to save a video output at full size and show only Face detection and EAR, you could define:
 ```cpp
 const float SCALE_FACTOR = 1.0;
 const bool SHOW_VIDEO_OUTPUT = false;
@@ -165,7 +183,7 @@ const bool SHOW_EYE_CONTOURS = false;
 const bool SHOW_EAR = true;
 const bool SAVE_TO_FILE = true;
 ```
-Or if you want to have use 60 frames for calibration, set the threshold 0.12 below the average value and sound the alarm if the instantaneous EAR (not using EMA) is below threshold for more than 3 seconds, you could define:
+Or if you want to use 60 frames for calibration, set the threshold 0.12 below the average value and sound the alarm if the instantaneous EAR (not using EMA) is below threshold for more than 3 seconds, you could define:
 ```cpp
 const float TIME_THRESHOLD = 3.0;
 const float ALPHA = 1.0;
