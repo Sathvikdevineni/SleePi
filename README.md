@@ -19,8 +19,11 @@
 </ol>
          
 # About the Project         
-SleePi is a real-time alert system and its function is to record the driver's drowsiness by using a camera mounted on raspberry pi. SleePi is a low-cost prototype which will observe the driver’s eyes, then alert them if they feel sleepy and also closing the eyes for long. As it is a real-time project which enhances safety-critical applications. Hence different methodologies are used on deduction times and exhibit the viability of ongoing observing dependent on out-of-test information to alert a sleepy driver. So we can say that SleePi step towards the pragmatic profound learning applications, possibly forestalling miniature dozes and reduces the accidents.
+SleePi is a real-time sleepiness detection and alert system. It is developed primarily for Raspberry Pi and its camera module. The main application for this project is driver drowsiness detection, as the Raspberry Pi is small enough to be placed in the car without obstructing the view and can be powered from the 12V socket (or a dedicated USB port). The module in this project uses an infrared camera, which helps visibility at low-light conditions as the drivers are likely to become drowsy while driving at night.
 
+It determines the position of the eyes and uses the Eye Aspect Ratio (EAR) to determine when the eyes are closed (or more squinted than usual). When the system detects that the user is sleepy, it starts playing a loud alarm sound trough the AUX port on Raspberry Pi (it can be connected to the car's speaker system). The alarm keeps playing until the user opens his eyes.
+
+According to a study by American Automobile Association in 2010 41% of drivers have reported having “fallen asleep or nodded off” while driving at least once in their lifetime and 11% reported having done so within the past year. Furthermore, National Highway Traffic Safety Administration’s publication in 2015 states that 2.4% of all fatal crashes in the US involve a drowsy driver. The purpose of this project is to bring attention to this problem and provides an open-source low-budget solution.
 # Technology
 ## Third Party Libraries 
 - [Dlib](https://github.com/davisking/dlib) image processing toolkit used for facial landmark detection (included)
@@ -48,9 +51,9 @@ Enter into terminal:
 ```bash
 sudo raspi-config
 ```
-Go to _Interfacing Options_ select _Camera_ and follow the prompts to enable it. Your Raspberry Pi will reboot.
+Go to _Interfacing Options_, select _Camera_ and follow the prompts to enable it. Your Raspberry Pi will reboot.
 
-To select the audio device you need to select ....
+To output the audio trough the AUX port, you need to go to the _raspi-config_ again, select _System Options_ , then _Audio_ and _3.5mm jack_.
 
 
 ### Pre-Requisites
