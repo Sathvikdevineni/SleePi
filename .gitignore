@@ -1,3 +1,6 @@
-Webcam test/build/
-Webcam test/bin
-Webcam test/libraries/dlib-19.22
+SleePi/build/
+SleePi/bin
+SleePi/libraries/dlib-19.22
+**/build/
+**/bin/
+**/.vscode
