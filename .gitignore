@@ -1,6 +1,5 @@
 SleePi/build/*
 SleePi/bin/*
-SleePi/libraries
 **/build/
 **/bin/
 **/.vscode

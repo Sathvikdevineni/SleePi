@@ -140,7 +140,6 @@ int main(int argc, char **argv)
             // Display rectange of detected face
             if ((SHOW_VIDEO_OUTPUT || SAVE_TO_FILE) && SHOW_FACE_DETECTION)
             {
-
                 cv::rectangle(scaled_frame, face, Scalar(255, 0, 0), 1, 8, 0);
             }
             full_object_detection shapes;
@@ -420,7 +419,7 @@ float get_threshold(VideoCapture cap)
                 if (waitKey(1) >= 0)
                     break;
             }
-            else if (SAVE_TO_FILE)
+            if (SAVE_TO_FILE)
             {
                 outputVideo.write(scaled_frame);
             }
