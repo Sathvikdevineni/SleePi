@@ -55,19 +55,8 @@ The first and most important step is to obtain a video from the Raspberry Pi's c
 ## License
 Distributed under the GPL-3.0 License.
 
-## Social Media 
-
-Email-id -  Sleep_Pi@outlook.com 
-* [Hackaday](https://hackaday.io/project/179258-sleepi)
-
-* [Facebook](https://www.facebook.com/RTPSleePI/)
-
-* [Instagram](https://www.instagram.com/sleep.pi_uofg/)
-
-* [Twitter](https://twitter.com/PiSleep)
-
-* [Youtube](https://www.youtube.com/channel/UCE3p9DPSaK3XjFBGdwhIPAQ/featured)
-
+## Contact us
+Email-id -  Sleep_Pi@outlook.com
 
 ## Contact
 Team 27 in ENG5220: Real Time Embedded Programming
