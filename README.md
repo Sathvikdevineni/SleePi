@@ -1,9 +1,18 @@
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
     <img src="https://user-images.githubusercontent.com/73529936/114861442-2f34e780-9de5-11eb-8a82-76c7db7b4bd9.png" alt="Paris" height="320">
-  </a>
+  </img>
+     <p align="center">
+      <strong>Drive safely in a smarter way</strong>
+</div>
+<br />
+<div align="center">
+    <a href="https://www.youtube.com/channel/UCE3p9DPSaK3XjFBGdwhIPAQ/featured"><img height=40 src="https://user-images.githubusercontent.com/73529936/115259861-28caa680-a12a-11eb-90cb-6977d6e9e850.jpg"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://hackaday.io/project/179258-sleepi"><img height=40 src="https://user-images.githubusercontent.com/73529936/115260277-86f78980-a12a-11eb-940e-03f5106ea26a.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://twitter.com/PiSleep"><img height=40 src="https://user-images.githubusercontent.com/73529936/115260608-d342c980-a12a-11eb-9890-2a29aeabe662.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.facebook.com/RTPSleePI/"><img height=40 src="https://user-images.githubusercontent.com/73529936/115260892-113fed80-a12b-11eb-992b-3188afb155f4.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.instagram.com/sleep.pi_uofg/"><img height=40 src="https://user-images.githubusercontent.com/73529936/115261111-40565f00-a12b-11eb-8e5b-9f425b4d7f3c.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 <br />
 
@@ -243,18 +252,8 @@ The alarm is stopped when the EMA goes above the set threshold. The alarm sample
 # License
 Distributed under the GPL-3.0 License.
 
-# Social Media 
-
-* Sleep_Pi@outlook.com 
-
-* [Facebook](https://www.facebook.com/RTPSleePI/)
-
-* [Instagram](https://www.instagram.com/sleep.pi_uofg/)
-
-* [Twitter](https://twitter.com/PiSleep)
-
-* [Youtube](https://www.youtube.com/channel/UCE3p9DPSaK3XjFBGdwhIPAQ/featured)
-
+## Contact us
+- Email Sleep_Pi@outlook.com
 
 # Contact
 Team 27 in ENG5220: Real Time Embedded Programming
