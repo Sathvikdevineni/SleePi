@@ -1,3 +1,4 @@
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -206,7 +207,6 @@ const float ALPHA = 1.0;
 const float THRESHOLD_SENSITIVITY = 0.12;
 const int FRAMES_FOR_CALIBRATION = 60;
 ```
-
 Note that after changing parameters you need to recompile the code.
 ## Methodology
 Using the OpenCV library the next frame from the camera is grabbed. For faster execution, some preprocessing is needed - the image is resized according to the *SCALE_FACTOR* parameter. It should be noted that OpenCV opens the camera stream as 640x480 by default and it it scaled down even more. The image is then converted to grayscale for dimensionality reduction and the histogram is equalised to normalise brightness and increase contrast of the image.
@@ -217,6 +217,7 @@ For display, the coloured frame is used, but all the calculations are performed 
 </p>
 
 The face is detected using a [pre-trained Haar Cascade Classifier](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_alt.xml). The classifier is loaded from an *.xml* file and [detectMultiScale](https://docs.opencv.org/3.4/d1/de5/classcv_1_1CascadeClassifier.html#aaf8181cb63968136476ec4204ffca498) method is used on the frame and returns a boundary rectangle for the detected faces. Sometimes it can misclassify other objects as faces or detect other people's faces. In that case, only the the largest face is used. If no face is found, the system shows a visual indicator and just loops until a face is found.
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/47836357/115254862-70572f80-a136-11eb-8406-e6ae9fe84ab1.png" width="53%"></img> 
  <img src="https://user-images.githubusercontent.com/47836357/115257157-7d751e00-a138-11eb-9a94-bb6668111080.png" width="40%"></img> 
@@ -228,6 +229,7 @@ Then  dlib's shape predictor is used with a pre-trained model, which predicts th
 <img src="https://user-images.githubusercontent.com/47836357/115262925-a51ab500-a13d-11eb-9f94-8d25aeb66359.png" width="56%"></img> 
 </p>
 Out of these points, only the points of the eyes are relevant, since they are used to determine the Eye Aspect Ratio (EAR). It is caluclated using the following formula:
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/47836357/115263908-7ea94980-a13e-11eb-9662-51dd8483cbfc.jpg" width="50%"></img> 
 <br>
@@ -251,11 +253,8 @@ The alarm is stopped when the EMA goes above the set threshold. The alarm sample
 
 # License
 Distributed under the GPL-3.0 License.
-
-## Contact us
-- Email Sleep_Pi@outlook.com
-
 # Contact
+
 Team 27 in ENG5220: Real Time Embedded Programming
 
 👤 **Sai Sathvik Devineni (2532243d)**
@@ -263,3 +262,5 @@ Team 27 in ENG5220: Real Time Embedded Programming
 👤 **Tomas Simutis (2603015s)**
 
 👤 **Muhammad Hassan Shahbaz (2619717s)**
+
+Email -  Sleep_Pi@outlook.com
