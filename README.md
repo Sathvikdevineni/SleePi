@@ -10,10 +10,10 @@
 # Table of contents
 <ol>
     <li><a href="#about-the-project">About the Project</a></li>
-    <li><a href="technologiy">Technology</a></li>
+    <li><a href="#technology">Technology</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#running-the-code">Running the Code</a></li>
-<li><a href="#configuration">Configuration</a></li>
+	<li><a href="#running-the-code">Running the Code</a></li>
+	<li><a href="#configuration">Configuration</a></li>
     <li><a href="#Methodology">Methodology</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -245,7 +245,7 @@ Distributed under the GPL-3.0 License.
 
 # Social Media 
 
-Email -  Sleep_Pi@outlook.com 
+* Sleep_Pi@outlook.com 
 
 * [Facebook](https://www.facebook.com/RTPSleePI/)
 
