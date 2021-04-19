@@ -196,15 +196,45 @@ const int FRAMES_FOR_CALIBRATION = 60;
 
 Note that after changing parameters you need to recompile the code.
 ## Methodology
-The first and most important step is to obtain a video from the Raspberry Pi's camera. We resized the obtained video to 640x480 pixels and converted it to grayscale, making it suitable for ongoing operation. From there on, the facial parts like eyebrows, nose, mouth, eyes and facial structure were captured.The eyes were then confined to ascertain the PERCLOS, which depends on the Eye Aspect Ratio (EAR). The EAR was calculated during the calibration process, which was used to decide the drowsiness limit. In order to evaluate the driver's condition, the EAR for each of the driver's eyes, for each tip, will be determined.. Furthermore, the presence of the driver's head is used to decide if the driver is conscious or not. An alarm is activated when the careless identification and the languor exploration work together when either:
+Using the OpenCV library the next frame from the camera is grabbed. For faster execution, some preprocessing is needed - the image is resized according to the *SCALE_FACTOR* parameter. It should be noted that OpenCV opens the camera stream as 640x480 by default and it it scaled down even more. The image is then converted to grayscale for dimensionality reduction and the histogram is equalised to normalise brightness and increase contrast of the image.
+For display, the coloured frame is used, but all the calculations are performed on the grayscale image.
 
-   1.	The EAR surpasses the sluggishness edge.
-   2.	The driver isn't looking forward.
 <p align="center">
-   </br>
-   <img src="https://user-images.githubusercontent.com/73529936/115017058-d8471500-9ead-11eb-8e0a-109c558ce478.PNG" alt="Paris" height="320">
-    
+<img src="https://user-images.githubusercontent.com/47836357/115252067-cecede80-a133-11eb-9c8f-5d54ea82f2a2.png" width="49%"></img> <img src="https://user-images.githubusercontent.com/47836357/115252074-cf677500-a133-11eb-8cff-c987f0d15cee.png" width="49%"></img> 
+</p>
 
+The face is detected using a [pre-trained Haar Cascade Classifier](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_alt.xml). The classifier is loaded from an *.xml* file and [detectMultiScale](https://docs.opencv.org/3.4/d1/de5/classcv_1_1CascadeClassifier.html#aaf8181cb63968136476ec4204ffca498) method is used on the frame and returns a boundary rectangle for the detected faces. Sometimes it can misclassify other objects as faces or detect other people's faces. In that case, only the the largest face is used. If no face is found, the system shows a visual indicator and just loops until a face is found.
+<p align="center">
+<img src="https://user-images.githubusercontent.com/47836357/115254862-70572f80-a136-11eb-8406-e6ae9fe84ab1.png" width="53%"></img> 
+ <img src="https://user-images.githubusercontent.com/47836357/115257157-7d751e00-a138-11eb-9a94-bb6668111080.png" width="40%"></img> 
+</p>
+
+Then  dlib's shape predictor is used with a pre-trained model, which predicts the points of 68 facial landmarks.
+<p align="center">
+<img src="https://ibug.doc.ic.ac.uk/media/uploads/images/annotpics/figure_68_markup.jpg" width="39%" ></img >
+<img src="https://user-images.githubusercontent.com/47836357/115262925-a51ab500-a13d-11eb-9f94-8d25aeb66359.png" width="56%"></img> 
+</p>
+Out of these points, only the points of the eyes are relevant, since they are used to determine the Eye Aspect Ratio (EAR). It is caluclated using the following formula:
+<p align="center">
+<img src="https://user-images.githubusercontent.com/47836357/115263908-7ea94980-a13e-11eb-9662-51dd8483cbfc.jpg" width="50%"></img> 
+<br>
+<img src="https://lh6.googleusercontent.com/qoeyiEcyQI4jfi3Bu2WTXX0rWsPYixvJjmqSjQ6ChvPpi2tCLBNXQCLedJNhaq4B-_U9vyk70e5vpOChxlPZNCUGAfv9A30pXsGXgarmUAmryM-M91hUS0Bgy2Yle1J7SX2NYSln" width="50%"></img> 
+</p>
+It can be deduced that the EAR is lower when the eyes are closed, however it is unclear by how much.
+
+When starting the program, an audio instruction is played that says to look into the camera for a few seconds without blinking. The average EAR for N frames (specified in config as *FRAMES_FOR_CALIBRATION*) is taken and then the *THRESHOLD_SENSITIVITY* is subtracted from that to determine the EAR threshold. 
+
+If the instantaneous EAR value is compared against the threshold, then the system is slightly unreliable as head movements or changes in lighting can bring the EAR slighly above or below the threshold for a few frames. This can result in the system detecting the person as awake when the alarm is playing and stopping it, even when the eyes remain closed. To make the system more robust, Exponential Moving Average is used to mitigate this issue.
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=EMA = \alpha \times EAR %2B (1-\alpha) \times EMA">
+</p>
+α should be between 0 and 1. As the α value becomes higher, more emphasis is placed on more recent samples. With α =  1.0, the system does not take past values into consideration and only acts on the most recent EAR value. With α= 1/N, the EMA approximates the Simple Moving Average for N samples. This method is more simple than storing past values to calculate SMA,  and puts more emphasis on recent values, which is prefect for this problem.
+
+When the EMA is lower than the threshold for N seconds (specified by *TIME_THRESHOLD*), the system identifies this as sleepiness and shows this information on screen and sends a signal to play the alarm sound.
+<p align="center">
+<img src="https://user-images.githubusercontent.com/47836357/115269200-bf579180-a143-11eb-8a80-a7e4923ff11c.png" width="90%"></img> 
+</p>
+The alarm is stopped when the EMA goes above the set threshold. The alarm sample is only a single "beep" sound that is being looped to avoid loading a large file into memory. The calls to start or stop playing an audio sample are executed on different threads to prevent blocking.
 # License
 Distributed under the GPL-3.0 License.
 
