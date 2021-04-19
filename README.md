@@ -3,8 +3,18 @@
 <div align="center">
     <img src="https://user-images.githubusercontent.com/73529936/114861442-2f34e780-9de5-11eb-8a82-76c7db7b4bd9.png" alt="Paris" height="320">
   </a>
+     <p align="center">
+      <strong>Drive safely in a smarter way</strong>
 </div>
 <br />
+<br />
+    <br />
+    <a href="https://www.youtube.com/channel/UCE3p9DPSaK3XjFBGdwhIPAQ/featured"><img height=40 src="https://user-images.githubusercontent.com/73529936/115259861-28caa680-a12a-11eb-90cb-6977d6e9e850.jpg"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://hackaday.io/project/179258-sleepi"><img height=40 src="https://user-images.githubusercontent.com/73529936/115260277-86f78980-a12a-11eb-940e-03f5106ea26a.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://twitter.com/PiSleep"><img height=40 src="https://user-images.githubusercontent.com/73529936/115260608-d342c980-a12a-11eb-9890-2a29aeabe662.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.facebook.com/RTPSleePI/"><img height=40 src="https://user-images.githubusercontent.com/73529936/115260892-113fed80-a12b-11eb-992b-3188afb155f4.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.instagram.com/sleep.pi_uofg/"><img height=40 src="https://user-images.githubusercontent.com/73529936/115261111-40565f00-a12b-11eb-8e5b-9f425b4d7f3c.png"></img></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <br />
 
 ## Table of contents
 <ol>
@@ -39,6 +49,7 @@ The first and most important step is to obtain a video from the Raspberry Pi's c
 <p align="center">
    </br>
    <img src="https://user-images.githubusercontent.com/73529936/115017058-d8471500-9ead-11eb-8e0a-109c558ce478.PNG" alt="Paris" height="320">
+   </br>
     
 
 ## License
@@ -47,6 +58,7 @@ Distributed under the GPL-3.0 License.
 ## Social Media 
 
 Email-id -  Sleep_Pi@outlook.com 
+* [Hackaday](https://hackaday.io/project/179258-sleepi)
 
 * [Facebook](https://www.facebook.com/RTPSleePI/)
 
