@@ -1,3 +1,4 @@
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -25,10 +26,13 @@ It determines the position of the eyes and uses the Eye Aspect Ratio (EAR) to de
 
 According to a study by American Automobile Association in 2010 41% of drivers have reported having “fallen asleep or nodded off” while driving at least once in their lifetime and 11% reported having done so within the past year. Furthermore, National Highway Traffic Safety Administration’s publication in 2015 states that 2.4% of all fatal crashes in the US involve a drowsy driver. The purpose of this project is to bring attention to this problem and provides an open-source low-budget solution.
 # Technology
-## Third Party Libraries 
-- [Dlib](https://github.com/davisking/dlib) image processing toolkit used for facial landmark detection (included)
-- [OpenCV](https://github.com/opencv/opencv) image processing library used for facial detection and video display
-- [miniaudio](https://github.com/mackron/miniaudio) single file library for audio playback (included)
+## Resources 
+- [OpenCV](https://github.com/opencv/opencv) image processing library used for face detection and video utilities (you need to install this yourself)
+- [Haar Cascade Classifier](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_alt.xml) for detecting faces (included)
+- [Dlib](https://github.com/davisking/dlib) image processing toolkit needed to use use the landmarks predictor (included) 
+- [Facial Landmarks Predictor](https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/) for getting the coordinates of the eyes (included)
+
+-  [miniaudio](https://github.com/mackron/miniaudio) single file library for audio playback (included)
 ## Hardware
 Tested on:
 - Raspberry Pi (v1) with  Pi NoIR Camera Module v2
@@ -226,7 +230,7 @@ When starting the program, an audio instruction is played that says to look into
 
 If the instantaneous EAR value is compared against the threshold, then the system is slightly unreliable as head movements or changes in lighting can bring the EAR slighly above or below the threshold for a few frames. This can result in the system detecting the person as awake when the alarm is playing and stopping it, even when the eyes remain closed. To make the system more robust, Exponential Moving Average is used to mitigate this issue.
 <p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=EMA = \alpha \times EAR %2B (1-\alpha) \times EMA">
+<img src="https://user-images.githubusercontent.com/47836357/115271036-959f6a00-a145-11eb-90e1-6f02c378c90f.png" width="40%"></img> 
 </p>
 α should be between 0 and 1. As the α value becomes higher, more emphasis is placed on more recent samples. With α =  1.0, the system does not take past values into consideration and only acts on the most recent EAR value. With α= 1/N, the EMA approximates the Simple Moving Average for N samples. This method is more simple than storing past values to calculate SMA,  and puts more emphasis on recent values, which is prefect for this problem.
 
@@ -235,6 +239,7 @@ When the EMA is lower than the threshold for N seconds (specified by *TIME_THRES
 <img src="https://user-images.githubusercontent.com/47836357/115269200-bf579180-a143-11eb-8a80-a7e4923ff11c.png" width="90%"></img> 
 </p>
 The alarm is stopped when the EMA goes above the set threshold. The alarm sample is only a single "beep" sound that is being looped to avoid loading a large file into memory. The calls to start or stop playing an audio sample are executed on different threads to prevent blocking.
+
 # License
 Distributed under the GPL-3.0 License.
 
