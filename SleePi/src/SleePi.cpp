@@ -154,7 +154,7 @@ int main(int argc, char **argv)
             // Display facial landmarks
             if ((SHOW_VIDEO_OUTPUT || SAVE_TO_FILE) && SHOW_FACIAL_LANDMARKS)
             {
-                for (int i = 0; i <= 68; i++)
+                for (unsigned long i = 0, max = shapes.num_parts(); i < max; i++)
                 {
                     cv::circle(scaled_frame,
                                Point(shapes.part(i).x(), shapes.part(i).y()),
